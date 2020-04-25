@@ -26,6 +26,8 @@ class {{class-name}} extends {{base-controller}}
     {
         ${{entity}} = Apiato::call('{{container-name}}@Create{{model}}Action', [$request]);
 
+        ${{entity}}->uploadMedia( ${{entity}}, "image", true );
+
         return $this->created($this->transform(${{entity}}, {{model}}Transformer::class));
     }
 
@@ -58,6 +60,8 @@ class {{class-name}} extends {{base-controller}}
     public function update{{model}}(Update{{model}}Request $request)
     {
         ${{entity}} = Apiato::call('{{container-name}}@Update{{model}}Action', [$request]);
+
+        ${{entity}}->uploadMedia( ${{entity}}, "image", true );
 
         return $this->transform(${{entity}}, {{model}}Transformer::class);
     }

@@ -19,11 +19,6 @@ class Update{{model}}Task extends Task
 
     public function run($id, array $data)
     {
-        try {
-            return $this->repository->update($data, $id);
-        }
-        catch (Exception $exception) {
-            throw new UpdateResourceFailedException();
-        }
+        return $this->repository->update($data, $id);
     }
 }

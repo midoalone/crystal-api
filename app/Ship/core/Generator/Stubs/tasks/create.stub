@@ -19,11 +19,6 @@ class Create{{model}}Task extends Task
 
     public function run(array $data)
     {
-        try {
-            return $this->repository->create($data);
-        }
-        catch (Exception $exception) {
-            throw new CreateResourceFailedException();
-        }
+        return $this->repository->create($data);
     }
 }
