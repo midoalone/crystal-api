@@ -186,7 +186,7 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'stub'        => 'Update',
                 'name'        => 'Update' . $model,
                 'operation'   => 'update' . $model,
-                'verb'        => 'PATCH',
+                'verb'        => 'POST',
                 'url'         => $url . '/{id}',
                 'action'      => 'Update' . $model . 'Action',
                 'request'     => 'Update' . $model . 'Request',
