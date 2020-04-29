@@ -32,7 +32,12 @@ class {{class-name}} extends Transformer
 {{attributes}}
         ];
 
+        // Get values of fillables
+        $response = $this->fillables( $entity, $response );
+
         $response = $this->withMedia( $entity, $response, "image" );
+        $response = $this->withMedia( $entity, $response, "gallery" );
+        $response = $this->withMedia( $entity, $response, "file" );
 
         $response = $this->ifAdmin([
             'real_id'    => $entity->id,

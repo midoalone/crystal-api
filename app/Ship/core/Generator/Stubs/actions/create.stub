@@ -10,10 +10,7 @@ class Create{{model}}Action extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
-            // add your request data here
-        ]);
-
+        $data = $request->all();
         ${{entity}} = Apiato::call('{{container-name}}@Create{{model}}Task', [$data]);
 
         return ${{entity}};

@@ -11,13 +11,6 @@ class {{class-name}} extends Request
 {
 
     /**
-     * The assigned Transporter for this Request
-     *
-     * @var string
-     */
-    {{transporterEnabled}}protected $transporter = {{transporterClass}};
-
-    /**
      * Define which Roles and/or Permissions has access to this request.
      *
      * @var  array
@@ -43,7 +36,7 @@ class {{class-name}} extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'id',
     ];
 
     /**

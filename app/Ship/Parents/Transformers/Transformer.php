@@ -35,4 +35,18 @@ abstract class Transformer extends AbstractTransformer {
 
     return $response;
   }
+
+  public function fillables($entity, $response) {
+    // Get values of fillables
+    $fillabeValues = [];
+    $fillables = $entity->getFillable();
+
+    foreach ($fillables as $fillable) {
+      $fillabeValues[$fillable] = $entity->{$fillable};
+    }
+
+    $response = array_merge($response, $fillabeValues);
+
+    return $response;
+  }
 }

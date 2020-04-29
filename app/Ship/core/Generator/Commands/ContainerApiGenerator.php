@@ -78,7 +78,7 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
     {
         $ui = 'api';
 
-        $useTransporters = $this->checkParameterOrConfirm('transporters', 'Would you like to use specific Transporters?', true);
+        $useTransporters = false;
 
         // containername as inputted and lower
         $containerName = $this->containerName;
@@ -88,27 +88,13 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
         $model = $this->containerName;
         $models = Pluralizer::plural($model);
 
-        // add the README file
-        $this->printInfoMessage('Generating README File');
-        $this->call('apiato:generate:readme', [
-            '--container'   => $containerName,
-            '--file'        => 'README',
-        ]);
-
-        // create the configuration file
-        $this->printInfoMessage('Generating Configuration File');
-        $this->call('apiato:generate:configuration', [
-            '--container'   => $containerName,
-            '--file'        => $_containerName,
-        ]);
-
         // create the MainServiceProvider for the container
-        $this->printInfoMessage('Generating MainServiceProvider');
-        $this->call('apiato:generate:serviceprovider', [
-            '--container'   => $containerName,
-            '--file'        => 'MainServiceProvider',
-            '--stub'        => 'mainserviceprovider',
-        ]);
+//        $this->printInfoMessage('Generating MainServiceProvider');
+//        $this->call('apiato:generate:serviceprovider', [
+//            '--container'   => $containerName,
+//            '--file'        => 'MainServiceProvider',
+//            '--stub'        => 'mainserviceprovider',
+//        ]);
 
         // create the model and repository for this container
         $this->printInfoMessage('Generating Model and Repository');
@@ -158,7 +144,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'action'      => 'GetAll' . $models . 'Action',
                 'request'     => 'GetAll' . $models . 'Request',
                 'task'        => 'GetAll' . $models . 'Task',
-                'transporter' => 'GetAll' . $models . 'Transporter',
             ],
             [
                 'stub'        => 'Find',
@@ -169,7 +154,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'action'      => 'Find' . $model . 'ById' . 'Action',
                 'request'     => 'Find' . $model . 'ById' . 'Request',
                 'task'        => 'Find' . $model . 'ById' . 'Task',
-                'transporter' => 'Find' . $model . 'ById' . 'Transporter',
             ],
             [
                 'stub'        => 'Create',
@@ -180,7 +164,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'action'      => 'Create' . $model . 'Action',
                 'request'     => 'Create' . $model . 'Request',
                 'task'        => 'Create' . $model . 'Task',
-                'transporter' => 'Create' . $model . 'Transporter',
             ],
             [
                 'stub'        => 'Update',
@@ -191,7 +174,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'action'      => 'Update' . $model . 'Action',
                 'request'     => 'Update' . $model . 'Request',
                 'task'        => 'Update' . $model . 'Task',
-                'transporter' => 'Update' . $model . 'Transporter',
             ],
             [
                 'stub'        => 'Delete',
@@ -202,7 +184,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 'action'      => 'Delete' . $model . 'Action',
                 'request'     => 'Delete' . $model . 'Request',
                 'task'        => 'Delete' . $model . 'Task',
-                'transporter' => 'Delete' . $model . 'Transporter',
             ],
         ];
 
@@ -224,7 +205,6 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
                 '--file' => $route['request'],
                 '--ui' => $ui,
                 '--transporter' => $useTransporters,
-                '--transportername' => $route['transporter'],
             ]);
 
             $this->call('apiato:generate:action', [
