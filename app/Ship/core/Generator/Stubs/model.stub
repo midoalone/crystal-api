@@ -4,6 +4,8 @@ namespace App\Containers\{{container-name}}\Models;
 
 use App\Ship\Parents\Models\Model;
 
+#use#
+
 class {{class-name}} extends Model
 {
     protected $fillable = [
@@ -36,5 +38,7 @@ class {{class-name}} extends Model
      * A resource key to be used by the the JSON API Serializer responses.
      */
     protected $resourceKey = '{{resource-key}}';
-    protected $table = '{{_container-name}}';
+    protected $table = '{{table-name}}';
+
+    #relations#
 }

@@ -90,12 +90,15 @@ class ModelGenerator extends GeneratorCommand implements ComponentsGenerator
             }
         }
 
+        $table_name = strtolower(preg_replace("/([a-z])([A-Z])/", "$1_$2", $this->containerName));
+
         return [
             'path-parameters' => [
                 'container-name' => $this->containerName,
             ],
             'stub-parameters' => [
-                '_container-name' => Str::lower($this->containerName),
+                '_container-name' => Str::lower($table_name),
+                'table-name' => $table_name,
                 'container-name' => $this->containerName,
                 'class-name' => $this->fileName,
                 'resource-key' => strtolower(Pluralizer::plural($this->fileName)),

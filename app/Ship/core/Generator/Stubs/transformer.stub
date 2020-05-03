@@ -5,6 +5,8 @@ namespace App\Containers\{{container-name}}\UI\API\Transformers;
 use App\Containers\{{container-name}}\Models\{{model}};
 use App\Ship\Parents\Transformers\Transformer;
 
+#use#
+
 class {{class-name}} extends Transformer
 {
     /**
@@ -18,7 +20,7 @@ class {{class-name}} extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-
+        #available_includes#
     ];
 
     /**
@@ -46,4 +48,6 @@ class {{class-name}} extends Transformer
 
         return $response;
     }
+
+    #includes#
 }
