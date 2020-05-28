@@ -19,6 +19,11 @@ class Create{{model}}Task extends Task
 
     public function run(array $data)
     {
-        return $this->repository->create($data);
+        $repository = $this->repository->create($data);
+
+        #ManyToMany#
+
+        return $repository;
     }
 }
+

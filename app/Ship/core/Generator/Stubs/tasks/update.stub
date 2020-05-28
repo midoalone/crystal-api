@@ -19,6 +19,11 @@ class Update{{model}}Task extends Task
 
     public function run($id, array $data)
     {
-        return $this->repository->update($data, $id);
+        $repository = $this->repository->update($data, $id);
+
+        #ManyToMany#
+
+        return $repository;
     }
 }
+
