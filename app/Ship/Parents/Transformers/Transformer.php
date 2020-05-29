@@ -12,41 +12,44 @@ use Apiato\Core\Abstracts\Transformers\Transformer as AbstractTransformer;
 abstract class Transformer extends AbstractTransformer {
 
   public function withMedia( $entity, $response, $name = "logo" ) {
+    public
+    function withMedia( $entity, $response, $name = "logo" ) {
 
-    $medias = $entity->getMedia( $name );
-    if ( $medias ) {
-      $url = [];
-      foreach ($medias as $media) {
-        $mediaUrl = $media->getUrl();
+      $medias = $entity->getMedia( $name );
+      if ( $medias ) {
+        $url = [];
+        foreach ( $medias as $media ) {
+          $mediaUrl = $media->getUrl();
 
-        if ( strpos( $mediaUrl, "http" ) === false ) {
-          $url[] = "https://{$media->getUrl()}";
-        }else{
-          $url[] = $mediaUrl;
+          if ( strpos( $mediaUrl, "http" ) === false ) {
+            $mediaUrl = "https://{$media->getUrl()}";
+          }
+
+          $url[] = str_replace( "/app/", "/", $mediaUrl );
         }
+
+        if ( count( $url ) === 1 ) {
+          $url = $url[0];
+        }
+
+        $response[ $name ] = $url;
       }
 
-      if(count($url) === 1) {
-        $url = $url[0];
+      return $response;
+    }
+
+    public
+    function fillables( $entity, $response ) {
+      // Get values of fillables
+      $fillabeValues = [];
+      $fillables     = $entity->getFillable();
+
+      foreach ( $fillables as $fillable ) {
+        $fillabeValues[ $fillable ] = $entity->{$fillable};
       }
 
-      $response[ $name ] = $url;
+      $response = array_merge( $response, $fillabeValues );
+
+      return $response;
     }
-
-    return $response;
   }
-
-  public function fillables($entity, $response) {
-    // Get values of fillables
-    $fillabeValues = [];
-    $fillables = $entity->getFillable();
-
-    foreach ($fillables as $fillable) {
-      $fillabeValues[$fillable] = $entity->{$fillable};
-    }
-
-    $response = array_merge($response, $fillabeValues);
-
-    return $response;
-  }
-}
