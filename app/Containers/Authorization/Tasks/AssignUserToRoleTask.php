@@ -22,7 +22,7 @@ class AssignUserToRoleTask extends Task
      */
     public function run(User $user, array $roles) : Authenticatable
     {
-        return $user->assignRole($roles);
+        return $user->syncRoles($roles);
     }
 
 }

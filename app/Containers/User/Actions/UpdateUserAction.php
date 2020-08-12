@@ -13,33 +13,37 @@ use Illuminate\Support\Facades\Hash;
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class UpdateUserAction extends Action
-{
+class UpdateUserAction extends Action {
 
-    /**
-     * @param \App\Ship\Transporters\DataTransporter $data
-     *
-     * @return  \App\Containers\User\Models\User
-     */
-    public function run(DataTransporter $data): User
-    {
-        $userData = [
-            'password'             => $data->password ? Hash::make($data->password) : null,
-            'name'                 => $data->name,
-            'email'                => $data->email,
-            'gender'               => $data->gender,
-            'birth'                => $data->birth,
-            'social_token'         => $data->token,
-            'social_expires_in'    => $data->expiresIn,
-            'social_refresh_token' => $data->refreshToken,
-            'social_token_secret'  => $data->tokenSecret,
-        ];
+  /**
+   * @param \App\Ship\Transporters\DataTransporter $data
+   *
+   * @return  \App\Containers\User\Models\User
+   */
+  public function run( DataTransporter $data ): User {
+    $userData = [
+      'password'             => $data->password ? Hash::make( $data->password ) : null,
+      'name'                 => $data->name,
+      'email'                => $data->email,
+      'gender'               => $data->gender,
+      'birth'                => $data->birth,
+      'social_token'         => $data->token,
+      'social_expires_in'    => $data->expiresIn,
+      'social_refresh_token' => $data->refreshToken,
+      'social_token_secret'  => $data->tokenSecret,
+    ];
 
-        // remove null values and their keys
-        $userData = array_filter($userData);
+    $userData = array_merge( request()->all(), $userData );
 
-        $user = Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
+    // remove null values and their keys
+    $userData = array_filter( $userData );
 
-        return $user;
+    $user = Apiato::call( 'User@UpdateUserTask', [ $userData, $data->id ] );
+
+    if ( $data->roles and $user->is_client == 0 ) {
+      Apiato::call( 'Authorization@AssignUserToRoleTask', [ $user, $data->roles ] );
     }
+
+    return $user;
+  }
 }

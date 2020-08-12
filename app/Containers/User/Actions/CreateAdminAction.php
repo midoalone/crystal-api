@@ -12,27 +12,24 @@ use App\Ship\Transporters\DataTransporter;
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class CreateAdminAction extends Action
-{
+class CreateAdminAction extends Action {
 
-    /**
-     * @param \App\Ship\Transporters\DataTransporter $data
-     *
-     * @return  \App\Containers\User\Models\User
-     */
-    public function run(DataTransporter $data): User
-    {
-        $admin = Apiato::call('User@CreateUserByCredentialsTask', [
-            $isClient = false,
-            $data->email,
-            $data->password,
-            $data->name
-        ]);
+  /**
+   * @param \App\Ship\Transporters\DataTransporter $data
+   *
+   * @return  \App\Containers\User\Models\User
+   */
+  public function run( DataTransporter $data ): User {
 
-        // NOTE: if not using a single general role for all Admins, comment out that line below. And assign Roles
-        // to your users manually. (To list admins in your dashboard look for users with `is_client=false`).
-        Apiato::call('Authorization@AssignUserToRoleTask', [$admin, ['admin']]);
+    $admin = Apiato::call( 'User@CreateUserByCredentialsTask', [
+      request()->all(),
+      $isClient = false,
+    ] );
 
-        return $admin;
-    }
+    // NOTE: if not using a single general role for all Admins, comment out that line below. And assign Roles
+    // to your users manually. (To list admins in your dashboard look for users with `is_client=false`).
+    Apiato::call( 'Authorization@AssignUserToRoleTask', [ $admin, $data->roles ] );
+
+    return $admin;
+  }
 }
