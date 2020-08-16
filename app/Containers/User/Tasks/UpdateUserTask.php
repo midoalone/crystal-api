@@ -16,42 +16,44 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class UpdateUserTask extends Task
-{
+class UpdateUserTask extends Task {
 
-    protected $repository;
+  protected $repository;
 
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
+  public function __construct( UserRepository $repository ) {
+    $this->repository = $repository;
+  }
+
+  /**
+   * @param $userData
+   * @param $userId
+   *
+   * @return mixed
+   * @return  \App\Containers\User\Models\User
+   * @throws NotFoundException
+   * @throws UpdateResourceFailedException
+   *
+   * @throws InternalErrorException
+   */
+  public function run( $userData, $userId ): User {
+    if ( empty( $userData ) ) {
+      throw new UpdateResourceFailedException( 'Inputs are empty.' );
     }
 
-    /**
-     * @param $userData
-     * @param $userId
-     *
-     * @return mixed
-     * @throws InternalErrorException
-     * @throws NotFoundException
-     * @throws UpdateResourceFailedException
-     *
-     * @return  \App\Containers\User\Models\User
-     */
-    public function run($userData, $userId): User
-    {
-        if (empty($userData)) {
-            throw new UpdateResourceFailedException('Inputs are empty.');
-        }
+    try {
+      $user = $this->repository->update( $userData, $userId );
 
-        try {
-            $user = $this->repository->update($userData, $userId);
-        } catch (ModelNotFoundException $exception) {
-            throw new NotFoundException('User Not Found.');
-        } catch (Exception $exception) {
-            throw new InternalErrorException();
-        }
+      if ( request()->has( "branches" ) ) {
+        $user->branches()->sync( request( "branches" ) );
+      }
 
-        return $user;
+    } catch ( ModelNotFoundException $exception ) {
+      throw new NotFoundException( 'User Not Found.' );
+    } catch ( Exception $exception ) {
+      throw new InternalErrorException();
     }
+
+    return $user;
+  }
 
 }
