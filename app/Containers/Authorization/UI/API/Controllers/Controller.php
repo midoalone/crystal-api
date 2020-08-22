@@ -16,6 +16,7 @@ use App\Containers\Authorization\UI\API\Requests\GetAllRolesRequest;
 use App\Containers\Authorization\UI\API\Requests\RevokeUserFromRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncPermissionsOnRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncUserRolesRequest;
+use App\Containers\Authorization\UI\API\Requests\UpdateRoleRequest;
 use App\Containers\Authorization\UI\API\Transformers\PermissionTransformer;
 use App\Containers\Authorization\UI\API\Transformers\RoleTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
@@ -159,6 +160,17 @@ class Controller extends ApiController {
    */
   public function createRole( CreateRoleRequest $request ) {
     $role = Apiato::call( 'Authorization@CreateRoleAction', [ new DataTransporter( $request ) ] );
+
+    return $this->transform( $role, RoleTransformer::class );
+  }
+
+  /**
+   * @param \App\Containers\Authorization\UI\API\Requests\UpdateRoleRequest $request
+   *
+   * @return  mixed
+   */
+  public function updateRole( UpdateRoleRequest $request ) {
+    $role = Apiato::call( 'Authorization@UpdateRoleAction', [ $request ] );
 
     return $this->transform( $role, RoleTransformer::class );
   }
