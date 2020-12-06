@@ -25,7 +25,7 @@ class DeleteSettingRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
+        // 'id',
     ];
 
     /**

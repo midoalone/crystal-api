@@ -28,7 +28,15 @@
 }
  */
 
-$router->patch('settings/{id}', [
+$router->post('settings/{id}', [
+    'as' => 'api_settings_update_setting_id',
+    'uses'  => 'Controller@updateSettingByID',
+    'middleware' => [
+      'auth:api',
+    ],
+]);
+
+$router->post('settings', [
     'as' => 'api_settings_update_setting',
     'uses'  => 'Controller@updateSetting',
     'middleware' => [

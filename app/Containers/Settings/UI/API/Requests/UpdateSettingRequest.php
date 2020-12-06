@@ -25,7 +25,7 @@ class UpdateSettingRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
+        // 'id',
     ];
 
     /**
@@ -45,10 +45,6 @@ class UpdateSettingRequest extends Request
     {
         return [
             // put your rules here
-            'id' => 'required|exists:settings,id',
-
-            'key' => 'sometimes|string|max:190',
-            'value' => 'sometimes|string|max:190',
         ];
     }
 

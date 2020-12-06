@@ -16,7 +16,7 @@ class GetAllSettingsRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => 'admin',
+        'roles'       => '',
     ];
 
     /**
@@ -25,6 +25,7 @@ class GetAllSettingsRequest extends Request
      * @var  array
      */
     protected $decode = [
+        // 'id',
     ];
 
     /**
@@ -34,6 +35,7 @@ class GetAllSettingsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
+         'id',
     ];
 
     /**

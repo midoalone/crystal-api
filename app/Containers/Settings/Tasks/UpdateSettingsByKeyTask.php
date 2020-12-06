@@ -36,16 +36,14 @@ class UpdateSettingsByKeyTask extends Task
         $setting = $this->repository->findWhere(['key' => $key])->first();
 
         if (!$setting) {
-            throw new NotFoundException();
-        }
-
-        try {
-            return $this->repository->update([
-                'value' => $value
-            ], $setting->id);
-        }
-        catch (Exception $exception) {
-            throw new UpdateResourceFailedException();
+          return $this->repository->create([
+            'key' => $key,
+            'value' => $value
+          ]);
+        }else{
+          return $this->repository->update([
+            'value' => $value
+          ], $setting->id);
         }
     }
 

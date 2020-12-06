@@ -28,7 +28,7 @@
 }
  */
 
-$router->post('settings', [
+$router->post('_settings', [
     'as' => 'api_settings_create_setting',
     'uses'  => 'Controller@createSetting',
     'middleware' => [
