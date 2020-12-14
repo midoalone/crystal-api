@@ -24,6 +24,6 @@ $router->get('category/{id}', [
     'as' => 'api_category_find_category_by_id',
     'uses'  => 'Controller@findCategoryById',
     'middleware' => [
-      'auth:api',
+//      'auth:api',
     ],
 ]);
