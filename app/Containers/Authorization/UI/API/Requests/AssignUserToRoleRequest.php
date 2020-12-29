@@ -19,7 +19,7 @@ class AssignUserToRoleRequest extends Request
      */
     protected $access = [
         'roles'       => '',
-        'permissions' => 'manage-admins-access',
+        'permissions' => '',
     ];
 
     /**

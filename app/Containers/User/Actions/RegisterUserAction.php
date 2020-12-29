@@ -7,6 +7,7 @@ use App\Containers\User\Events\UserRegisteredEvent;
 use App\Containers\User\Mails\UserRegisteredMail;
 use App\Containers\User\Models\User;
 use App\Containers\User\Notifications\UserRegisteredNotification;
+use App\Ship\Events\SendSMSEvent;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Transporters\DataTransporter;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -19,32 +20,26 @@ use Illuminate\Support\Facades\Notification;
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class RegisterUserAction extends Action
-{
+class RegisterUserAction extends Action {
 
-    /**
-     * @param \App\Ship\Transporters\DataTransporter $data
-     *
-     * @return  \App\Containers\User\Models\User
-     */
-    public function run(DataTransporter $data): User
-    {
-        // create user record in the database and return it.
-        $user = Apiato::call('User@CreateUserByCredentialsTask', [
-            $isClient = true,
-            $data->email,
-            $data->password,
-            $data->name,
-            $data->gender,
-            $data->birth
-        ]);
+  /**
+   * @param \App\Ship\Transporters\DataTransporter $data
+   *
+   * @return  \App\Containers\User\Models\User
+   */
+  public function run( DataTransporter $data ): User {
+    // create user record in the database and return it.
+    $user = Apiato::call( 'User@CreateUserByCredentialsTask', [
+      request()->all(),
+      $isClient = true,
+    ] );
 
-        Mail::send(new UserRegisteredMail($user));
+    Mail::send( new UserRegisteredMail( $user ) );
 
-        Notification::send($user, new UserRegisteredNotification($user));
+    Notification::send( $user, new UserRegisteredNotification( $user ) );
 
-        App::make(Dispatcher::class)->dispatch(New UserRegisteredEvent($user));
+    App::make( Dispatcher::class )->dispatch( new UserRegisteredEvent( $user ) );
 
-        return $user;
-    }
+    return $user;
+  }
 }

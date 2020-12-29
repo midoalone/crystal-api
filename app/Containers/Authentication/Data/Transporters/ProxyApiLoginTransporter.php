@@ -19,6 +19,7 @@ class ProxyApiLoginTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             'email',
+            'mobile',
             'name',
             'password',
             'client_id',

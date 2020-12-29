@@ -3,16 +3,15 @@
 namespace App\Containers\Launch\UI\API\Controllers;
 
 use App\Containers\Category\Models\Category;
+use App\Containers\Category\UI\API\Transformers\CategoryTransformer;
 use App\Containers\Event\Models\Event;
 use App\Containers\Event\UI\API\Transformers\EventTransformer;
 use App\Containers\Order\Models\Order;
-use App\Containers\Product\Models\Product;
 use App\Containers\Settings\Models\Setting;
 use App\Containers\Settings\UI\API\Transformers\SettingTransformer;
 use App\Containers\User\Models\User;
 use App\Ship\Events\SendSMSEvent;
 use App\Ship\Parents\Controllers\ApiController;
-use Carbon\Carbon;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -34,27 +33,26 @@ class Controller extends ApiController {
    * @return \Illuminate\Http\JsonResponse
    */
   public function launch( Request $request ) {
-    $categories = Category::all();
-
-    $events = $this->transform( Event::all(), EventTransformer::class );
+    $categories = $this->transform( Category::all(), CategoryTransformer::class );
+    $events     = $this->transform( Event::all(), EventTransformer::class );
 
     $gallery = $this->transform( Setting::find( 1000 ), SettingTransformer::class );
-    $splash = $this->transform( Setting::find( 2000 ), SettingTransformer::class );
+    $splash  = $this->transform( Setting::find( 2000 ), SettingTransformer::class );
 
     return $this->json( [
       "data" => [
-        "settings" => Setting::all(),
-        "gallery"  => $gallery,
-        "splash"  => $splash,
-        "categories"  => $categories,
-        "events"  => $events,
+        "settings"   => Setting::all(),
+        "gallery"    => $gallery,
+        "splash"     => $splash,
+        "categories" => $categories['data'],
+        "events"     => $events,
       ]
     ] );
 
   }
 
   public function dashboard() {
-    $user     = Auth::user();
+    $user = Auth::user();
 
     // Orders
     $orders = Order::where( 'status', '!=', 'cancelled' )->get()->count();

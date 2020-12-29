@@ -19,7 +19,7 @@ class UpdateUserTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'update-users',
+        'permissions' => '',
     ];
 
     /**

@@ -14,7 +14,7 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-$router->put('users/{id}', [
+$router->post('users/{id}', [
     'as' => 'api_user_update_user',
     'uses'       => 'Controller@updateUser',
     'middleware' => [

@@ -20,7 +20,7 @@ class DeleteUserTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'delete-users',
+        'permissions' => '',
     ];
 
     /**

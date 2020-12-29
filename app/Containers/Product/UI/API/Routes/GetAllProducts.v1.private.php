@@ -24,6 +24,6 @@ $router->get('product', [
     'as' => 'api_product_get_all_products',
     'uses'  => 'Controller@getAllProducts',
     'middleware' => [
-      'auth:api',
+//      'auth:api',
     ],
 ]);

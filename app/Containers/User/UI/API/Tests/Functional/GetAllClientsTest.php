@@ -20,7 +20,7 @@ class GetAllClientsTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'list-users',
+        'permissions' => '',
     ];
 
     /**

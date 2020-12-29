@@ -19,7 +19,7 @@ class CreateRoleRequest extends Request
      */
     protected $access = [
         'roles'       => '',
-        'permissions' => 'manage-roles',
+        'permissions' => "",
     ];
 
     /**

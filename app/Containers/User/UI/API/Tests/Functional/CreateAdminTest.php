@@ -19,7 +19,7 @@ class CreateAdminTest extends ApiTestCase
     protected $endpoint = 'post@v1/admins';
 
     protected $access = [
-        'permissions' => 'create-admins',
+        'permissions' => '',
         'roles'       => '',
     ];
 

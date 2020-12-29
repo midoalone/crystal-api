@@ -19,7 +19,7 @@ class FindUserTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'search-users',
+        'permissions' => '',
     ];
 
     /**

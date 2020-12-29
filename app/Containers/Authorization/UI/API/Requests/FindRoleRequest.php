@@ -19,7 +19,7 @@ class FindRoleRequest extends Request
      */
     protected $access = [
         'roles'       => '',
-        'permissions' => 'manage-roles',
+        'permissions' => '',
     ];
 
     /**

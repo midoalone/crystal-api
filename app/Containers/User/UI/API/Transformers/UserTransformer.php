@@ -19,7 +19,6 @@ class UserTransformer extends Transformer {
    */
   protected $availableIncludes = [
     'roles',
-    'branches',
   ];
 
   /**
@@ -70,10 +69,6 @@ class UserTransformer extends Transformer {
 
   public function includeRoles( User $user ) {
     return $this->collection( $user->roles, new RoleTransformer() );
-  }
-
-  public function includeBranches( User $user ) {
-    return $this->collection( $user->branches, new BranchTransformer() );
   }
 
 }

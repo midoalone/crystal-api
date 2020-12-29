@@ -7,20 +7,20 @@ use App\Ship\Parents\Repositories\Repository;
 /**
  * Class CategoryRepository
  */
-class CategoryRepository extends Repository
-{
+class CategoryRepository extends Repository {
 
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'id' => '=',
-        'name_en' => 'like',
-'name_ar' => 'like',
-'description_en' => 'like',
-'description_ar' => 'like',
-'parent_id' => '=',
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'id'                  => '=',
+    'name_en'             => 'like',
+    'name_ar'             => 'like',
+    'description_en'      => 'like',
+    'description_ar'      => 'like',
+    'parent_id'           => '=',
+    'is_product_category' => '=',
 
-    ];
+  ];
 
 }

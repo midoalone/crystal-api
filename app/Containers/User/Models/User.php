@@ -4,7 +4,6 @@ namespace App\Containers\User\Models;
 
 use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
-use App\Containers\Branch\Models\Branch;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
@@ -54,6 +53,13 @@ class User extends UserModel implements ChargeableInterface {
     'social_nickname',
     'confirmed',
     'is_client',
+    'mobile',
+    'phone',
+    'last_name',
+//    'verification_code',
+//    'phone_verified',
+    'player_id',
+    'language',
   ];
 
   protected $casts = [
@@ -87,10 +93,6 @@ class User extends UserModel implements ChargeableInterface {
    */
   public function paymentAccounts() {
     return $this->hasMany( PaymentAccount::class );
-  }
-
-  public function branches() {
-    return $this->belongsToMany( Branch::class, 'user_branches', 'user_id', 'branch_id' );
   }
 
 }
