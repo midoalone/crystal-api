@@ -33,6 +33,8 @@
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-tokenizer": "*",
+    "barryvdh/laravel-dompdf": "^0.9.0",
+    "barryvdh/laravel-snappy": "^0.4.8",
     "doctrine/dbal": "2.5.*",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^1.0",
