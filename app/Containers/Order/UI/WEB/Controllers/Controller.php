@@ -16,18 +16,14 @@ use PDF;
  */
 class Controller extends WebController {
 
-  /**
-   * @return  \Illuminate\Http\Response
-   */
-  public function getQuotation( $id ) {
-
+  private function orderDetails($id) {
     $types = [
       "men"        => 'رجال',
       "women"      => 'نساء',
       "Family Mix" => 'تجمع عائلي'
     ];
 
-    $order    = Order::with( 'user' )->find( $id );
+    $order    = Order::with( ['user', 'salesman'] )->find( $id );
     $products = $order->products->toArray();
 
     $categories = [];
@@ -58,9 +54,24 @@ class Controller extends WebController {
       ];
     }
 
-    $pdf = App::make( 'snappy.pdf.wrapper' );
-    $pdf->loadView( 'order::quotation', compact( 'order', 'types', 'groups' ) );
+    return compact( 'order', 'types', 'groups' );
+  }
 
+  public function getQuotation( $id ) {
+    $pdf = App::make( 'snappy.pdf.wrapper' );
+    $pdf->loadView( 'order::quotation', $this->orderDetails($id) );
+    return $pdf->inline();
+  }
+
+  public function getWorkOrder( $id ) {
+    $pdf = App::make( 'snappy.pdf.wrapper' );
+    $pdf->loadView( 'order::quotation', $this->orderDetails($id) );
+    return $pdf->inline();
+  }
+
+  public function getInvoice( $id ) {
+    $pdf = App::make( 'snappy.pdf.wrapper' );
+    $pdf->loadView( 'order::invoice', $this->orderDetails($id) );
     return $pdf->inline();
   }
 }

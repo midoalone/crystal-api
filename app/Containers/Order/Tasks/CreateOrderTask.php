@@ -3,30 +3,34 @@
 namespace App\Containers\Order\Tasks;
 
 use App\Containers\Order\Data\Repositories\OrderRepository;
-use App\Ship\Exceptions\CreateResourceFailedException;
+use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Tasks\Task;
-use Exception;
+use Illuminate\Support\Facades\Auth;
 
-class CreateOrderTask extends Task
-{
+class CreateOrderTask extends Task {
 
-    protected $repository;
+  protected $repository;
 
-    public function __construct(OrderRepository $repository)
-    {
-        $this->repository = $repository;
+  public function __construct( OrderRepository $repository ) {
+    $this->repository = $repository;
+  }
+
+  public function run( array $data ) {
+
+    // Clean all drafts
+    if($data['status'] == 'draft') {
+      $user = Auth::user()->id;
+      Order::where('user_id', $user)->where('status', 'draft')->delete();
     }
 
-    public function run(array $data)
-    {
-        $repository = $this->repository->create($data);
+    $repository = $this->repository->create( $data );
 
-        if(request()->has("products")) {
-              $repository->products()->sync(request("products"));
-            }
-
-
-        return $repository;
+    if ( request()->has( "products" ) ) {
+      $repository->products()->sync( request( "products" ) );
     }
+
+
+    return $repository;
+  }
 }
 
